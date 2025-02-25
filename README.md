@@ -1,3 +1,4 @@
+![alt text](frontend/src/images.jpeg)
 # capstone-rtrw
 Buat capstone
 # dependancies
