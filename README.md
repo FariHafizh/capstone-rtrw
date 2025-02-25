@@ -9,3 +9,8 @@ npm install express mysql2 body-parser cors nodemon
 ```
 node server.js
 ```
+# progress sementara
+## login page
+![alt text](login.png)
+## register page
+![alt text](register.png)
