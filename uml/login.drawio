@@ -1,0 +1,61 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.0.16">
+  <diagram name="Halaman-1" id="RK0aogwzNpBGmrGbHJSx">
+    <mxGraphModel dx="1434" dy="696" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="To7IAQ98atd0NisCjidW-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="To7IAQ98atd0NisCjidW-1" target="To7IAQ98atd0NisCjidW-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-1" value="" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=light-dark(#000000, #ff9090);" vertex="1" parent="1">
+          <mxGeometry x="354" y="90" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="To7IAQ98atd0NisCjidW-3" target="To7IAQ98atd0NisCjidW-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-3" value="Masuk ke halaman login" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="324" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="To7IAQ98atd0NisCjidW-4" target="To7IAQ98atd0NisCjidW-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-4" value="Buat akun dan masukkan data diri sesuai KTP" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="To7IAQ98atd0NisCjidW-5" target="To7IAQ98atd0NisCjidW-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-5" value="Masukkan NIK dan password" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="324" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="To7IAQ98atd0NisCjidW-6" target="To7IAQ98atd0NisCjidW-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="To7IAQ98atd0NisCjidW-6" target="To7IAQ98atd0NisCjidW-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-6" value="Apakah sudah&amp;nbsp;&lt;div&gt;punya akun?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="319" y="340" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="To7IAQ98atd0NisCjidW-8" target="To7IAQ98atd0NisCjidW-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-8" value="Menuju beranda" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="324" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-16" value="no" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="449" y="350" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-17" value="yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="390" y="430" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-18" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="359" y="710" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="To7IAQ98atd0NisCjidW-20" value="&lt;font style=&quot;font-size: 25px;&quot;&gt;Login dan Register&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="269" y="13" width="230" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
