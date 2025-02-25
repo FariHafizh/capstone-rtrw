@@ -1,0 +1,52 @@
+-- Tabel KTP
+CREATE TABLE KTP (
+    ID_KTP INT AUTO_INCREMENT PRIMARY KEY,
+    NIK CHAR(16) UNIQUE,
+    tanggalPembuatan DATE,
+    tanggalKadaluwarsa DATE
+);
+
+-- Tabel KK (Kartu Keluarga)
+CREATE TABLE KK (
+    ID_KK INT AUTO_INCREMENT PRIMARY KEY,
+    nomorKK CHAR(16) UNIQUE,
+    alamat VARCHAR(255),
+    tanggalTerbit DATE
+);
+
+-- Tabel Surat
+CREATE TABLE Surat (
+    ID_Surat INT AUTO_INCREMENT PRIMARY KEY,
+    nomorSurat VARCHAR(50) UNIQUE,
+    tanggalPembuatan DATE,
+    jenisSurat VARCHAR(100)
+);
+
+-- Tabel suratOrang (Hubungan M:N antara Surat dan Orang)
+CREATE TABLE suratOrang (
+    ID_suratOrang INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Surat INT,
+    ID_KTP INT,
+    FOREIGN KEY (ID_Surat) REFERENCES Surat(ID_Surat) ON DELETE CASCADE,
+    FOREIGN KEY (ID_KTP) REFERENCES KTP(ID_KTP) ON DELETE CASCADE
+);
+
+-- Tabel Orang
+CREATE TABLE orang (
+    ID_orang INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(255) NOT NULL,
+    NIK INT UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    tempatLahir VARCHAR(255) NOT NULL,
+    tanggalLahir DATE NOT NULL,
+    jenisKelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
+    alamat TEXT NOT NULL
+);
+
+-- Tabel orangKK (Hubungan M:N antara Orang dan KK)
+CREATE TABLE orangKK (
+    ID_orangKK INT AUTO_INCREMENT PRIMARY KEY,
+    ID_KTP INT,
+    ID_KK INT,
+    FOREIGN KEY (ID_KTP) REFERENCES KTP(ID_KTP) ON DELETE CASCADE,
+    FOREIGN KEY (ID_KK) REFERENCES KK(ID_KK) ON DELETE CASCADE
