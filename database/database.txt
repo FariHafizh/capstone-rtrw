@@ -44,9 +44,9 @@ CREATE TABLE Aktor (
     role ENUM('Admin', 'Warga', 'RT', 'RW', 'Sekretaris RT') NOT NULL   //Menambahkan role
 );
 
-//Tabel orangKK (Hubungan M:N antara Aktor dan KK)
-CREATE TABLE orangKK (
-    ID_orangKK INT AUTO_INCREMENT PRIMARY KEY,
+//Tabel aktorKK (Hubungan M:N antara Aktor dan KK)
+CREATE TABLE aktorKK (
+    ID_aktorKK INT AUTO_INCREMENT PRIMARY KEY,
     ID_KTP INT,
     ID_KK INT,
     FOREIGN KEY (ID_KTP) REFERENCES KTP(ID_KTP) ON DELETE CASCADE,
