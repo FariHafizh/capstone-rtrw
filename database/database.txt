@@ -41,7 +41,7 @@ CREATE TABLE Aktor (
     tempatLahir VARCHAR(255) NOT NULL,
     tanggalLahir DATE NOT NULL,
     jenisKelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
-    role ENUM('Admin', 'Warga', 'RT', 'RW') NOT NULL   //Menambahkan role
+    role ENUM('Admin', 'Warga', 'RT', 'RW', 'Sekretaris RT') NOT NULL   //Menambahkan role
 );
 
 //Tabel orangKK (Hubungan M:N antara Aktor dan KK)
