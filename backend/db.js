@@ -1,18 +1,18 @@
 const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
-    host: '', // masukin host
-    user: '', // masukin user
-    password: '', // masukin password
-    database: '' // masukin nama database
+const db = mysql.createConnection({
+    host: '',
+    user: '',
+    password: '',
+    database: ''
 });
 
-connection.connect((err) => {
+db.connect((err) => {
     if (err) {
-        console.error('Error connecting to MySQL:', err);
-        return;
+        console.error('Gagal koneksi database:', err);
+        process.exit(1);
     }
-    console.log('Connected to databasekepston successfully!');
+    console.log('Koneksi ke MySQL berhasil');
 });
 
-module.exports = connection;
+module.exports = db;
