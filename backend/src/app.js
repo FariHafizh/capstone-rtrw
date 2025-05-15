@@ -14,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 // Static folder untuk frontend (register.html, login.html, dashboard.html)
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.use('/uploads', express.static('uploads'));
+
 // Setup session
 app.use(session({
   secret: 'secret-key-strong',  // ganti dengan secret yang kuat
@@ -23,6 +25,7 @@ app.use(session({
 }));
 
 app.use('/api/auth', authRoutes);
+app.use('/uploads', express.static('uploads'));
 app.use('/api/surat', suratRoutes);
 app.use('/api/auth', authRtRwRoutes);
 app.use('/api', dashboardRtRwRoutes);
