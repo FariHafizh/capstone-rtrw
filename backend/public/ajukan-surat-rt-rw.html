@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ajukan Surat ke RT/RW</title>
+  <style>
+    .rt-rw-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .rt-rw-container input {
+      width: 50px;
+      padding: 5px;
+    }
+    .button-container {
+      margin-top: 20px;
+    }
+    button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Form Ajukan Surat ke RT/RW</h2>
+
+  <form id="suratForm" enctype="multipart/form-data">
+    <label for="subjek">Subjek Surat:</label><br>
+    <input type="text" id="subjek" name="subjek" placeholder="Judul/subjek surat" required><br><br>
+
+    <label for="fileSurat">Upload Surat Pengajuan (PDF/DOCX):</label><br>
+    <input type="file" id="fileSurat" name="fileSurat" accept=".pdf,.docx" required><br><br>
+
+    <label for="provinsi">Provinsi:</label><br>
+    <select id="provinsi" name="provinsi" required>
+      <option value="">Pilih Provinsi</option>
+      <option value="Jawa Barat">Jawa Barat</option>
+      <option value="Jawa Tengah">Jawa Tengah</option>
+      <option value="Jawa Timur">Jawa Timur</option>
+    </select><br><br>
+
+    <label for="kotaKabupaten">Kota/Kabupaten:</label><br>
+    <select id="kotaKabupaten" name="kota_kabupaten" required>
+      <option value="">Pilih Kota/Kabupaten</option>
+      <option value="Bandung">Bandung</option>
+      <option value="Jogja">Jogja</option>
+      <option value="Surabaya">Surabaya</option>
+    </select><br><br>
+
+    <label for="kecamatan">Kecamatan:</label><br>
+    <select id="kecamatan" name="kecamatan" required>
+      <option value="">Pilih Kecamatan</option>
+      <option value="Kecamatan 1">Kecamatan 1</option>
+      <option value="Kecamatan 2">Kecamatan 2</option>
+      <option value="Kecamatan 3">Kecamatan 3</option>
+    </select><br><br>
+
+    <label for="kelurahan">Kelurahan:</label><br>
+    <select id="kelurahan" name="kelurahan" required>
+      <option value="">Pilih Kelurahan</option>
+      <option value="Kelurahan 1">Kelurahan 1</option>
+      <option value="Kelurahan 2">Kelurahan 2</option>
+      <option value="Kelurahan 3">Kelurahan 3</option>
+    </select><br><br>
+
+    <div class="rt-rw-container">
+      <div>
+        <label for="rt">RT:</label><br>
+        <input type="text" id="rt" name="rt" maxlength="3" pattern="[0-9]+" title="Hanya angka" required>
+      </div>
+      <div>
+        <label for="rw">RW:</label><br>
+        <input type="text" id="rw" name="rw" maxlength="3" pattern="[0-9]+" title="Hanya angka" required>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button type="submit">Ajukan Surat</button>
+      <button type="button" onclick="konfirmasiBatal()">Kembali</button>
+    </div>
+  </form>
+
+  <p id="message"></p>
+
+  <script>
+    async function checkSession() {
+      try {
+        const res = await fetch('/api/auth/check-session');
+        if (!res.ok) throw new Error('Session tidak valid');
+      } catch {
+        alert('Anda harus login terlebih dahulu.');
+        window.location.href = '/login.html';
+      }
+    }
+
+    checkSession();
+
+    const form = document.getElementById('suratForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch('/api/surat/ajukan', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await res.json();
+        message.textContent = result.message;
+
+        if (res.ok) form.reset();
+      } catch (err) {
+        message.textContent = 'Terjadi kesalahan: ' + err.message;
+      }
+    });
+
+    function konfirmasiBatal() {
+      const yakin = confirm('Batalkan pengajuan?');
+      if (yakin) {
+        window.location.href = '/dashboard.html';
+      }
+    }
+  </script>
+</body>
+</html>
