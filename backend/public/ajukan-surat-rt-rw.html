@@ -40,7 +40,7 @@
     </select><br><br>
 
     <label for="kotaKabupaten">Kota/Kabupaten:</label><br>
-    <select id="kotaKabupaten" name="kota_kabupaten" required>
+    <select id="kota" name="kota" required>
       <option value="">Pilih Kota/Kabupaten</option>
       <option value="Bandung">Bandung</option>
       <option value="Jogja">Jogja</option>
@@ -99,23 +99,27 @@
     const message = document.getElementById('message');
 
     form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
+  e.preventDefault();
+  const formData = new FormData(form);
 
-      try {
-        const res = await fetch('/api/surat/ajukan', {
-          method: 'POST',
-          body: formData,
-        });
-
-        const result = await res.json();
-        message.textContent = result.message;
-
-        if (res.ok) form.reset();
-      } catch (err) {
-        message.textContent = 'Terjadi kesalahan: ' + err.message;
-      }
+  try {
+    const res = await fetch('/api/surat/ajukan', {
+      method: 'POST',
+      body: formData,
     });
+
+    const result = await res.json();
+
+    if (res.ok) {
+      alert(result.message);  // tampilkan notifikasi sukses
+      window.location.href = '/dashboard.html'; // redirect ke dashboard
+    } else {
+      message.textContent = result.message || 'Gagal mengajukan surat.';
+    }
+  } catch (err) {
+    message.textContent = 'Terjadi kesalahan: ' + err.message;
+  }
+});
 
     function konfirmasiBatal() {
       const yakin = confirm('Batalkan pengajuan?');
