@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pengajuan Surat Saya</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <h2>Daftar Pengajuan Surat Anda</h2>
+  <button onclick="goBack()">Kembali</button>
+  <table id="suratTable">
+    <thead>
+      <tr>
+        <th>Subjek</th>
+        <th>Provinsi</th>
+        <th>Kota</th>
+        <th>Kecamatan</th>
+        <th>Kelurahan</th>
+        <th>RT</th>
+        <th>RW</th>
+        <th>Status</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    async function checkSession() {
+      const res = await fetch('/api/auth/check-session');
+      if (!res.ok) {
+        alert('Anda harus login terlebih dahulu.');
+        window.location.href = '/login.html';
+        return;
+      }
+    }
+
+    async function fetchPengajuan() {
+      try {
+        const res = await fetch('/api/surat/milik-saya');
+        const data = await res.json();
+        const tbody = document.querySelector('#suratTable tbody');
+        tbody.innerHTML = '';
+
+        data.forEach(surat => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${surat.subjek}</td>
+            <td>${surat.provinsi}</td>
+            <td>${surat.kota}</td>
+            <td>${surat.kecamatan}</td>
+            <td>${surat.kelurahan}</td>
+            <td>${surat.rt}</td>
+            <td>${surat.rw}</td>
+            <td>${surat.status}</td>
+            <td><a href="/uploads/${surat.file_path}" target="_blank">Lihat</a></td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        alert('Gagal mengambil data pengajuan: ' + err.message);
+      }
+    }
+
+    function goBack() {
+      if (confirm('Kembali ke dashboard?')) {
+        window.location.href = '/dashboard.html';
+      }
+    }
+
+    checkSession();
+    fetchPengajuan();
+  </script>
+</body>
+</html>
