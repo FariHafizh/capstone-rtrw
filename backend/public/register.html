@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrasi Warga</title>
+</head>
+<body>
+  <h2>Form Registrasi Warga</h2>
+  <form id="registerForm">
+    <input type="text" name="nik" placeholder="NIK" required><br>
+    <input type="text" name="nama" placeholder="Nama" required><br>
+    <select name="jenis_kelamin" required>
+      <option value="">Pilih Jenis Kelamin</option>
+      <option value="Laki-laki">Laki-laki</option>
+      <option value="Perempuan">Perempuan</option>
+    </select><br>
+    <input type="date" name="tanggal_lahir" required><br>
+    <input type="email" name="email" placeholder="Email" required><br>
+    <input type="password" name="password" placeholder="Password" required><br>
+    <input type="password" name="confirm_password" placeholder="Konfirmasi Password" required><br>
+    <button type="submit">Daftar</button>
+  </form>
+
+  <p id="message"></p>
+
+   <!-- Tambahan link ke login -->
+  <p>Sudah punya akun? <a href="login.html">Masuk</a></p>
+
+  <script>
+  const form = document.getElementById('registerForm');
+  const message = document.getElementById('message');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      message.textContent = result.message;
+
+      if (res.ok && result.redirect) {
+        setTimeout(() => {
+          window.location.href = result.redirect;
+        }, 1000);
+      }
+    } catch (err) {
+      message.textContent = 'Terjadi kesalahan: ' + err.message;
+      console.error(err);
+    }
+  });
+</script>
+
+
+
+</body>
+</html>

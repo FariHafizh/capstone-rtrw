@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Superadmin - Input Data RT/RW</title>
+</head>
+<body>
+  <h2>Input Data RT</h2>
+  <form id="formRt">
+    <input type="text" name="username" placeholder="Username RT" required /><br />
+    <input type="password" name="password" placeholder="Password RT" required /><br />
+    <input type="text" name="rt" placeholder="Nomor RT" required /><br />
+    <button type="submit">Tambah RT</button>
+  </form>
+
+  <h2>Input Data RW</h2>
+  <form id="formRw">
+    <input type="text" name="username" placeholder="Username RW" required /><br />
+    <input type="password" name="password" placeholder="Password RW" required /><br />
+    <input type="text" name="rw" placeholder="Nomor RW" required /><br />
+    <button type="submit">Tambah RW</button>
+  </form>
+
+  <p id="message"></p>
+
+  <script>
+    const formRt = document.getElementById('formRt');
+    const formRw = document.getElementById('formRw');
+    const message = document.getElementById('message');
+
+    formRt.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(formRt));
+      try {
+        const res = await fetch('/api/superadmin/rt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        message.textContent = result.message;
+        if (res.ok) formRt.reset();
+      } catch (err) {
+        message.textContent = 'Error: ' + err.message;
+      }
+    });
+
+    formRw.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(formRw));
+      try {
+        const res = await fetch('/api/superadmin/rw', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        message.textContent = result.message;
+        if (res.ok) formRw.reset();
+      } catch (err) {
+        message.textContent = 'Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

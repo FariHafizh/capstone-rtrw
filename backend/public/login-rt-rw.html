@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login RT/RW</title>
+</head>
+<body>
+  <h2>Login RT/RW</h2>
+  <form id="loginRtRwForm">
+    <input type="text" name="username" placeholder="Username" required /><br />
+    <input type="password" name="password" placeholder="Password" required /><br />
+    <button type="submit">Login</button>
+  </form>
+
+  <p id="message"></p>
+
+  <script>
+    const form = document.getElementById('loginRtRwForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(form));
+
+      try {
+        const res = await fetch('/api/auth/login-rt-rw', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+        message.textContent = result.message;
+
+        if (res.ok && result.redirect) {
+          setTimeout(() => {
+            window.location.href = result.redirect;
+          }, 1000);
+        }
+      } catch (err) {
+        message.textContent = 'Terjadi kesalahan: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
