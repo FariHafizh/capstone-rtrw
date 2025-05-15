@@ -1,4 +1,3 @@
-// controllers/suratController.js
 const db = require('../config/db');
 const path = require('path');
 
@@ -11,7 +10,7 @@ exports.ajukanSurat = async (req, res) => {
   }
 
   try {
-    const filePath = path.join('uploads', file.filename);
+    const filename = file.filename; // nama file seperti: 1715779915000.pdf
 
     await db.query(`
       INSERT INTO pengajuan_surat (id_warga, subjek, file_path, provinsi, kota, kecamatan, kelurahan, rt, rw)
@@ -19,7 +18,7 @@ exports.ajukanSurat = async (req, res) => {
     `, [
       req.session.user.id_warga,
       subjek,
-      filePath,
+      filename, // Simpan nama filenya saja, bukan path lengkap
       provinsi,
       kota,
       kecamatan,
@@ -32,5 +31,21 @@ exports.ajukanSurat = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Gagal mengajukan surat.' });
+  }
+};
+
+exports.getSuratMilikSaya = async (req, res) => {
+  const id_warga = req.session.user.id_warga;
+  try {
+    const [rows] = await db.query(
+      `SELECT subjek, file_path, provinsi, kota, kecamatan, kelurahan, rt, rw, status
+       FROM pengajuan_surat
+       WHERE id_warga = ?`,
+      [id_warga]
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Gagal mengambil data pengajuan surat.' });
   }
 };
