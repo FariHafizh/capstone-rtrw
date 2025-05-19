@@ -98,8 +98,33 @@
     const form = document.getElementById('suratForm');
     const message = document.getElementById('message');
 
+    function formatRtRwOnBlur(e) {
+    const val = e.target.value.replace(/\D/g, ''); // hanya digit
+    e.target.value = val.padStart(3, '0'); // ubah jadi 3 digit saat selesai input
+  }
+
+  function onlyDigitsWhileTyping(e) {
+    e.target.value = e.target.value.replace(/\D/g, ''); // cegah input non-digit
+  }
+
+  document.getElementById('rt').addEventListener('input', onlyDigitsWhileTyping);
+  document.getElementById('rw').addEventListener('input', onlyDigitsWhileTyping);
+  
+  document.getElementById('rt').addEventListener('blur', formatRtRwOnBlur);
+  document.getElementById('rw').addEventListener('blur', formatRtRwOnBlur);
+    
+
     form.addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  // Dapatkan inputan RT dan RW
+  const rtInput = document.getElementById('rt');
+  const rwInput = document.getElementById('rw');
+
+  // Format menjadi 3 digit
+  rtInput.value = rtInput.value.padStart(3, '0');
+  rwInput.value = rwInput.value.padStart(3, '0');
+
   const formData = new FormData(form);
 
   try {
@@ -120,6 +145,7 @@
     message.textContent = 'Terjadi kesalahan: ' + err.message;
   }
 });
+
 
     function konfirmasiBatal() {
       const yakin = confirm('Batalkan pengajuan?');
