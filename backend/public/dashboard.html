@@ -3,10 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <title>Dashboard</title>
+  <style>
+  .circle-progress {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(#4caf50 var(--progress), #e0e0e0 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+    --progress: 0deg;
+  }
+</style>
+
 </head>
 <body>
   <h2 id="welcome"></h2>
   <button id="ajukanSuratBtn">Ajukan surat ke RT/RW</button>
+  <button id="templateSuratBtn">Template Surat</button>
+  <button id="cekPengajuanBtn">Cek pengajuan surat</button>
+  <button id="inputDataBtn">Input Data</button>
+  <h3>Kelengkapan Data Diri</h3>
+<div id="progressContainer" class="circle-progress">0%</div>
+  <div id="statistikSurat">
+  <h3>Statistik Pengajuan Surat</h3>
+  <ul>
+    <li>Diajukan: <span id="diajukanCount">0</span></li>
+    <li>Menunggu: <span id="menungguCount">0</span></li>
+    <li>Disetujui: <span id="disetujuiCount">0</span></li>
+    <li>Ditolak: <span id="ditolakCount">0</span></li>
+  </ul>
+</div>
   <button id="logoutBtn">Logout</button>
 
   <p id="message"></p>
@@ -26,9 +57,57 @@
 
   checkSession();
 
+  async function getKelengkapanData() {
+  try {
+    const res = await fetch('/api/warga/kelengkapan-data');
+    if (!res.ok) throw new Error('Gagal mengambil kelengkapan data');
+    const { percentage } = await res.json();
+    
+    const deg = (percentage / 100) * 360;
+    const progressElement = document.getElementById('progressContainer');
+    progressElement.style.setProperty('--progress', `${deg}deg`);
+    progressElement.textContent = `${percentage}%`;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+getKelengkapanData();
+
+  async function loadStatistik() {
+  try {
+    const res = await fetch('/api/surat/statistik');
+    if (!res.ok) throw new Error('Gagal mengambil statistik');
+    const data = await res.json();
+
+    document.getElementById('diajukanCount').textContent = data.diajukan;
+    document.getElementById('menungguCount').textContent = data.menunggu;
+    document.getElementById('disetujuiCount').textContent = data.disetujui;
+    document.getElementById('ditolakCount').textContent = data.ditolak;
+  } catch (err) {
+    console.error(err);
+    document.getElementById('statistikSurat').textContent = 'Gagal memuat statistik.';
+  }
+}
+
+checkSession().then(loadStatistik);
+
+
   document.getElementById('ajukanSuratBtn').addEventListener('click', () => {
     window.location.href = '/ajukan-surat-rt-rw.html';
   });
+
+  document.getElementById('templateSuratBtn').addEventListener('click', () => {
+  window.location.href = '/template-surat.html';
+});
+
+  document.getElementById('cekPengajuanBtn').addEventListener('click', () => {
+      window.location.href = '/pengajuan-surat-warga.html';
+    });
+
+  document.getElementById('inputDataBtn').addEventListener('click', () => {
+  window.location.href = '/input-data-warga.html';
+});
 
   document.getElementById('logoutBtn').addEventListener('click', async () => {
     try {
