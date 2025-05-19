@@ -4,9 +4,11 @@ const session = require('express-session');
 const app = express();
 const authRoutes = require('./routes/authRoutes');
 const suratRoutes = require('./routes/suratRoutes');
+const wargaRoutes = require('./routes/wargaRoutes');
 const authRtRwRoutes = require('./routes/authRtRwRoutes');
 const dashboardRtRwRoutes = require('./routes/dashboardRtRwRoutes');
 const superadminRoutes = require('./routes/superadminRoutes');
+const templateSuratRouter = require('./routes/templateSuratRoutes');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -27,8 +29,10 @@ app.use(session({
 app.use('/api/auth', authRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use('/api/surat', suratRoutes);
+app.use('/api/warga', wargaRoutes);
 app.use('/api/auth', authRtRwRoutes);
 app.use('/api', dashboardRtRwRoutes);
 app.use('/api/superadmin', superadminRoutes);
+app.use('/api/template-surat', templateSuratRouter);
 
 module.exports = app;
