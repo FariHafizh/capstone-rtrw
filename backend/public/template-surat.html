@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Template Surat</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    button {
+      cursor: pointer;
+      padding: 6px 12px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Daftar Template Surat</h2>
+  <button onclick="goBack()">Kembali ke Dashboard</button>
+
+  <table id="templateTable">
+    <thead>
+      <tr>
+        <th>Nama Template</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    async function checkSession() {
+      const res = await fetch('/api/auth/check-session');
+      if (!res.ok) {
+        alert('Anda harus login terlebih dahulu.');
+        window.location.href = '/login.html';
+        return false;
+      }
+      return true;
+    }
+
+    async function fetchTemplates() {
+      try {
+        const res = await fetch('/api/template-surat');
+        if (!res.ok) throw new Error('Gagal mengambil data template');
+        const data = await res.json();
+        const tbody = document.querySelector('#templateTable tbody');
+        tbody.innerHTML = '';
+
+        data.forEach(template => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${template.nama}</td>
+            <td>
+              <button onclick="downloadFile('${template.file_path}')">Download</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function downloadFile(filename) {
+      const url = `/uploads/template_surat/${filename}`;
+      // Membuka link download di tab baru
+      window.open(url, '_blank');
+    }
+
+    function goBack() {
+      if (confirm('Kembali ke dashboard?')) {
+        window.location.href = '/dashboard.html';
+      }
+    }
+
+    (async () => {
+      const loggedIn = await checkSession();
+      if (loggedIn) {
+        fetchTemplates();
+      }
+    })();
+  </script>
+</body>
+</html>
