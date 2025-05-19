@@ -66,7 +66,7 @@
             <td>${surat.kelurahan}</td>
             <td>${surat.rt}</td>
             <td>${surat.rw}</td>
-            <td>${surat.status}</td>
+            <td>${getStatusText(surat.status)}</td>
             <td><a href="/uploads/${surat.file_path}" target="_blank">Lihat</a></td>
           `;
           tbody.appendChild(row);
@@ -75,6 +75,15 @@
         alert('Gagal mengambil data pengajuan: ' + err.message);
       }
     }
+
+    function getStatusText(statusCode) {
+  switch (statusCode) {
+    case 1: return 'Menunggu';
+    case 2: return 'Disetujui';
+    case 3: return 'Ditolak';
+    default: return 'Tidak Diketahui';
+  }
+}
 
     function goBack() {
       if (confirm('Kembali ke dashboard?')) {
