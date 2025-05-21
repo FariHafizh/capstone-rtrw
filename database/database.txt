@@ -1,64 +1,90 @@
-//Tabel KTP
-CREATE TABLE KTP (
-    ID_KTP INT AUTO_INCREMENT PRIMARY KEY,
-    NIK CHAR(16) UNIQUE,
-    tanggalPembuatan DATE,
-    tanggalKadaluwarsa DATE
+CREATE TABLE Warga_WNI (
+    id_warga INT AUTO_INCREMENT PRIMARY KEY,
+    nik CHAR(16) UNIQUE NOT NULL,
+    nama VARCHAR(255) NOT NULL,
+    tempat_lahir VARCHAR(100) NOT NULL,
+    tanggal_lahir DATE NOT NULL,
+    jenis_kelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
+    alamat TEXT NOT NULL,
+    rt VARCHAR(10) NOT NULL,
+    rw VARCHAR(10) NOT NULL,
+    kelurahan_desa VARCHAR(100) NOT NULL,
+    kecamatan VARCHAR(100) NOT NULL,
+    kabupaten_kota VARCHAR(100) NOT NULL,
+    provinsi VARCHAR(100) NOT NULL,
+    agama VARCHAR(50) NOT NULL,
+    status_perkawinan VARCHAR(50) NOT NULL,
+    pekerjaan VARCHAR(100) NOT NULL,
+    kewarganegaraan VARCHAR(50) NOT NULL,
+    berlaku_hingga DATE,
+    email VARCHAR(100),
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255)
 );
 
-//Tabel KK (Kartu Keluarga)
-CREATE TABLE KK (
-    ID_KK INT AUTO_INCREMENT PRIMARY KEY,
-    nomorKK CHAR(16) UNIQUE,
-    alamat VARCHAR(255),
-    tanggalTerbit DATE
+CREATE TABLE Warga_WNA (
+    id_wna INT AUTO_INCREMENT PRIMARY KEY,
+    permit_number VARCHAR(50) UNIQUE NOT NULL,
+    niora VARCHAR(50) UNIQUE NOT NULL,
+    stay_permit_index VARCHAR(20),
+    permit_expiry DATE,
+    nama_lengkap VARCHAR(255) NOT NULL,
+    tempat_lahir VARCHAR(100),
+    tanggal_lahir DATE,
+    nomor_passpor VARCHAR(50) UNIQUE NOT NULL,
+    masa_berlaku_passpor DATE,
+    kewarganegaraan VARCHAR(100),
+    jenis_kelamin ENUM('Male', 'Female'),
+    alamat TEXT,
+    rt VARCHAR(10),
+    rw VARCHAR(10),
+    kelurahan_desa VARCHAR(100),
+    kecamatan VARCHAR(100),
+    kabupaten_kota VARCHAR(100),
+    pekerjaan VARCHAR(100),
+    status_keimigrasian VARCHAR(100),
+    email VARCHAR(100),
+    username VARCHAR(100) UNIQUE,
+    password VARCHAR(255)
 );
 
-//Tabel Surat
+CREATE TABLE RT (
+    id_rt INT AUTO_INCREMENT PRIMARY KEY,
+    id_warga INT,
+    nama VARCHAR(255) NOT NULL,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rt VARCHAR(10),
+    rw VARCHAR(10),
+    kelurahan VARCHAR(100),
+    kecamatan VARCHAR(100),
+    kabupaten_kota VARCHAR(100),
+    provinsi VARCHAR(100),
+    FOREIGN KEY (id_warga) REFERENCES Warga(id_warga) ON DELETE CASCADE
+);
+
+CREATE TABLE RW (
+    id_rw INT AUTO_INCREMENT PRIMARY KEY,
+    id_warga INT,
+    nama VARCHAR(255) NOT NULL,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rt VARCHAR(10),
+    rw VARCHAR(10),
+    kelurahan VARCHAR(100),
+    kecamatan VARCHAR(100),
+    kabupaten_kota VARCHAR(100),
+    provinsi VARCHAR(100),
+    FOREIGN KEY (id_warga) REFERENCES Warga(id_warga) ON DELETE CASCADE
+);
+
 CREATE TABLE Surat (
     ID_Surat INT AUTO_INCREMENT PRIMARY KEY,
     nomorSurat VARCHAR(50) UNIQUE,
     tanggalPembuatan DATE,
     jenisSurat VARCHAR(100),
-    lampiran TEXT   //Menambahkan atribut lampiran
+    lampiran TEXT   
 );
 
-//Tabel suratAktor (Hubungan M:N antara Surat dan Aktor)
-CREATE TABLE suratAktor (
-    ID_suratAktor INT AUTO_INCREMENT PRIMARY KEY,
-    ID_Surat INT,
-    ID_KTP INT,
-    FOREIGN KEY (ID_Surat) REFERENCES Surat(ID_Surat) ON DELETE CASCADE,
-    FOREIGN KEY (ID_KTP) REFERENCES KTP(ID_KTP) ON DELETE CASCADE
-);
 
-//Tabel Aktor (dengan role: Admin, Warga, RT, RW)
-CREATE TABLE Aktor (
-    ID_aktor INT AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(255) NOT NULL,
-    NIK CHAR(16) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    tempatLahir VARCHAR(255) NOT NULL,
-    tanggalLahir DATE NOT NULL,
-    jenisKelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
-    role ENUM('Admin', 'Warga', 'RT', 'RW', 'SekretarisRT') NOT NULL   //Menambahkan role
-);
 
-//Tabel aktorKK (Hubungan M:N antara Aktor dan KK)
-CREATE TABLE aktorKK (
-    ID_aktorKK INT AUTO_INCREMENT PRIMARY KEY,
-    ID_KTP INT,
-    ID_KK INT,
-    FOREIGN KEY (ID_KTP) REFERENCES KTP(ID_KTP) ON DELETE CASCADE,
-    FOREIGN KEY (ID_KK) REFERENCES KK(ID_KK) ON DELETE CASCADE
-);
-
-//Tabel historiAlamat (untuk menyimpan perubahan alamat)
-CREATE TABLE historiAlamat (
-    ID_histori INT AUTO_INCREMENT PRIMARY KEY,
-    ID_aktor INT,
-    alamatLama VARCHAR(255),
-    alamatBaru VARCHAR(255),
-    tanggalPerubahan DATE,
-    FOREIGN KEY (ID_aktor) REFERENCES Aktor(ID_aktor) ON DELETE CASCADE
-);
