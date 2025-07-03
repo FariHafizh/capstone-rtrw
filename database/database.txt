@@ -1,90 +1,68 @@
-CREATE TABLE Warga_WNI (
-    id_warga INT AUTO_INCREMENT PRIMARY KEY,
-    nik CHAR(16) UNIQUE NOT NULL,
-    nama VARCHAR(255) NOT NULL,
-    tempat_lahir VARCHAR(100) NOT NULL,
-    tanggal_lahir DATE NOT NULL,
-    jenis_kelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
-    alamat TEXT NOT NULL,
-    rt VARCHAR(10) NOT NULL,
-    rw VARCHAR(10) NOT NULL,
-    kelurahan_desa VARCHAR(100) NOT NULL,
-    kecamatan VARCHAR(100) NOT NULL,
-    kabupaten_kota VARCHAR(100) NOT NULL,
-    provinsi VARCHAR(100) NOT NULL,
-    agama VARCHAR(50) NOT NULL,
-    status_perkawinan VARCHAR(50) NOT NULL,
-    pekerjaan VARCHAR(100) NOT NULL,
-    kewarganegaraan VARCHAR(50) NOT NULL,
-    berlaku_hingga DATE,
-    email VARCHAR(100),
-    username VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255)
-);
+pengajuan_surat
+id int(11) AI PK 
+id_warga int(11) 
+subjek varchar(255) 
+file_path varchar(255) 
+file_path_signed varchar(255) 
+provinsi varchar(100) 
+kota varchar(100) 
+kecamatan varchar(100) 
+kelurahan varchar(100) 
+rt varchar(10) 
+rw varchar(10) 
+status tinyint(4) 
+alasan_penolakan text 
+tanggal_ajuan datetime
 
-CREATE TABLE Warga_WNA (
-    id_wna INT AUTO_INCREMENT PRIMARY KEY,
-    permit_number VARCHAR(50) UNIQUE NOT NULL,
-    niora VARCHAR(50) UNIQUE NOT NULL,
-    stay_permit_index VARCHAR(20),
-    permit_expiry DATE,
-    nama_lengkap VARCHAR(255) NOT NULL,
-    tempat_lahir VARCHAR(100),
-    tanggal_lahir DATE,
-    nomor_passpor VARCHAR(50) UNIQUE NOT NULL,
-    masa_berlaku_passpor DATE,
-    kewarganegaraan VARCHAR(100),
-    jenis_kelamin ENUM('Male', 'Female'),
-    alamat TEXT,
-    rt VARCHAR(10),
-    rw VARCHAR(10),
-    kelurahan_desa VARCHAR(100),
-    kecamatan VARCHAR(100),
-    kabupaten_kota VARCHAR(100),
-    pekerjaan VARCHAR(100),
-    status_keimigrasian VARCHAR(100),
-    email VARCHAR(100),
-    username VARCHAR(100) UNIQUE,
-    password VARCHAR(255)
-);
+rt
+rt_id int(11) AI PK 
+no_rt varchar(10) 
+rw_id varchar(100) 
+nama_ketua varchar(255) 
+provinsi varchar(100) 
+kota varchar(100) 
+kecamatan varchar(100) 
+kelurahan_desa varchar(100) 
+username varchar(255) 
+password varchar(255) 
+ttd_digital varchar(255)
 
-CREATE TABLE RT (
-    id_rt INT AUTO_INCREMENT PRIMARY KEY,
-    id_warga INT,
-    nama VARCHAR(255) NOT NULL,
-    username VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    rt VARCHAR(10),
-    rw VARCHAR(10),
-    kelurahan VARCHAR(100),
-    kecamatan VARCHAR(100),
-    kabupaten_kota VARCHAR(100),
-    provinsi VARCHAR(100),
-    FOREIGN KEY (id_warga) REFERENCES Warga(id_warga) ON DELETE CASCADE
-);
+rw
+rw_id varchar(100) PK 
+no_rw varchar(10) 
+nama_ketua varchar(255) 
+provinsi varchar(100) 
+kota varchar(100) 
+kecamatan varchar(100) 
+kelurahan_desa varchar(100) 
+username varchar(255) 
+password varchar(255) 
+ttd_digital varchar(255)
 
-CREATE TABLE RW (
-    id_rw INT AUTO_INCREMENT PRIMARY KEY,
-    id_warga INT,
-    nama VARCHAR(255) NOT NULL,
-    username VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    rt VARCHAR(10),
-    rw VARCHAR(10),
-    kelurahan VARCHAR(100),
-    kecamatan VARCHAR(100),
-    kabupaten_kota VARCHAR(100),
-    provinsi VARCHAR(100),
-    FOREIGN KEY (id_warga) REFERENCES Warga(id_warga) ON DELETE CASCADE
-);
+template_surat
+id_template int(11) AI PK 
+nama varchar(255) 
+file_path varchar(255)
 
-CREATE TABLE Surat (
-    ID_Surat INT AUTO_INCREMENT PRIMARY KEY,
-    nomorSurat VARCHAR(50) UNIQUE,
-    tanggalPembuatan DATE,
-    jenisSurat VARCHAR(100),
-    lampiran TEXT   
-);
-
-
-
+warga
+id_warga int(11) AI PK 
+NIK char(16) 
+nama varchar(255) 
+email varchar(255) 
+password varchar(255) 
+tempat_lahir varchar(255) 
+tanggal_lahir date 
+jenis_kelamin enum('Laki-laki','Perempuan') 
+alamat text 
+rt varchar(10) 
+rw varchar(10) 
+kelurahan_desa varchar(100) 
+kecamatan varchar(100) 
+agama varchar(50) 
+status_perkawinan enum('Belum Kawin','Kawin') 
+pekerjaan varchar(100) 
+kewarganegaraan varchar(50) 
+negara varchar(100) 
+provinsi varchar(100) 
+foto_ktp varchar(255) 
+kota varchar(255)
