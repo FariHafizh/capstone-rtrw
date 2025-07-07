@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const { ajukanSurat, getSuratMilikSaya, getStatistikSurat } = require('../controllers/suratController');
+const { ajukanSurat, getSuratMilikSaya, getStatistikSurat, getSuratMenungguTTD, tandaTanganiSurat, tolakSurat, getRiwayatSuratRtRw, uploadTemplateSurat } = require('../controllers/suratController');
 const { isLoggedIn } = require('../middlewares/authMiddleware');
 
 
@@ -18,6 +18,19 @@ const storage = multer.diskStorage({
     cb(null, filename);
   }
 });
+
+// Storage untuk template surat
+const templateStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/templates/');
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, `${Date.now()}${ext}`);
+  }
+});
+const uploadTemplate = multer({ storage: templateStorage });
+
 
 const upload = multer({ storage });
 
@@ -37,5 +50,23 @@ router.get('/download/:filename', isLoggedIn, (req, res) => {
     res.download(filePath, filename);
   });
 });
+
+router.get('/menunggu-ttd', isLoggedIn, getSuratMenungguTTD);
+// Tambahkan storage baru untuk signed files di luar controller
+const signedStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/signed/'),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `signed_${Date.now()}${ext}`);
+  }
+});
+
+const uploadSigned = multer({ storage: signedStorage });
+
+router.post('/tanda-tangani/:id', isLoggedIn, uploadSigned.single('fileSurat'), tandaTanganiSurat);
+router.post('/tolak/:id', isLoggedIn, tolakSurat);
+router.get('/riwayat-rtrw', isLoggedIn, getRiwayatSuratRtRw);
+router.post('/template/upload', isLoggedIn, uploadTemplate.single('fileTemplate'), uploadTemplateSurat);
+
 
 module.exports = router;
