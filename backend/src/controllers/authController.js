@@ -72,6 +72,6 @@ exports.logout = (req, res) => {
             return res.status(500).json({ message: 'Logout gagal.' });
         }
         res.clearCookie('connect.sid'); // clear cookie session
-        res.json({ message: 'Logout berhasil', redirect: '/login.html' });
+        res.json({ message: 'Logout berhasil', redirect: '/login-warga_baru.html' });
     });
 };
